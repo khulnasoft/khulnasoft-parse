@@ -182,10 +182,6 @@ yaml
 
 Looking for support for another language? [File an issue](https://github.com/KhulnaSoft/khulnasoft-parse/issues/new) with a link to the repo that contains the grammar.
 
-## Contributing
-
-Pull requests are welcome. For non-issue discussions about `khulnasoft-parse`, [join
-our Discord.](https://discord.gg/3XFf78nAx5)
 
 ### Adding and testing queries
 
