@@ -45,14 +45,12 @@ class Pattern1a {
 }
 
 Name: constructor
-Parameters: ()
 Definition (definition.constructor):
 constructor() {}
 Lineage: [Pattern1a]
 Lineage types: [class]
 
 Name: pattern0
-Parameters: (param1)
 Doc:
 /**
    * Pattern 0 comment.
@@ -74,7 +72,6 @@ Metadata:
     is_export = true
 
 Name: pattern2
-Parameters: (param1)
 Doc:
 // Pattern 2 comment.
 // More pattern 2 comment.
@@ -87,7 +84,6 @@ function pattern2(param1) {
 }
 
 Name: f
-Parameters: ()
 Doc:
 // f comment.
 Definition (definition.function):
@@ -96,14 +92,12 @@ Metadata:
     is_export = true
 
 Name: g
-Parameters: ()
 Doc:
 // g comment.
 Definition (definition.function):
 function* g() {}
 
 Name: pattern3
-Parameters: (param1)
 Doc:
 /**
  * Pattern 3 comment.
@@ -116,7 +110,6 @@ Metadata:
     is_export = true
 
 Name: pattern4a
-Parameters: (param1)
 Doc:
 /**
  * Pattern 4a comment.
@@ -127,7 +120,6 @@ const pattern4a = function (param1) {
 };
 
 Name: pattern4b
-Parameters: (param1)
 Doc:
 /**
  * Pattern 4b comment.
@@ -138,7 +130,6 @@ Metadata:
     is_export = true
 
 Name: pattern5a
-Parameters: (param1)
 Doc:
 /**
  * Pattern 5a comment.
@@ -151,7 +142,6 @@ Metadata:
     is_export = true
 
 Name: pattern5b
-Parameters: (param1)
 Doc:
 /**
  * Pattern 5b comment.
@@ -160,42 +150,36 @@ Definition (definition.function):
 var pattern5b = (param1) => {};
 
 Name: pattern6a
-Parameters: (a)
 Doc:
 // Pattern 6a comment.
 Definition (definition.function):
 pattern6a = function(a) {};
 
 Name: pattern6b
-Parameters: (b)
 Doc:
 // Pattern 6b comment.
 Definition (definition.function):
 pattern6b = (b) => {};
 
 Name: member
-Parameters: (c)
 Doc:
 // Pattern 6c comment.
 Definition (definition.function):
 pattern6c.member = function(c) {};
 
 Name: member
-Parameters: (d)
 Doc:
 // Pattern 6d comment.
 Definition (definition.function):
 pattern6d.member = (d) => {};
 
 Name: pattern7a
-Parameters: (a)
 Doc:
 // Pattern 7a comment.
 Definition (definition.function):
 pattern7a: function(a) {}
 
 Name: pattern7b
-Parameters: (b)
 Doc:
 // Pattern 7b comment.
 Definition (definition.function):

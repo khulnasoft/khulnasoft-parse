@@ -1,17 +1,14 @@
 Name: foo
-Parameters: ()
 Definition (definition.function):
 void foo()
 
 Name: bar
-Parameters: ()
 Doc:
 /// bar is a docstring
 Definition (definition.function):
 int bar()
 
 Name: fooClassBar
-Parameters: ()
 Doc:
 /// FCB docstring
 Definition (definition.function):
@@ -44,14 +41,12 @@ mixin FooMixin {
 }
 
 Name: barMixin
-Parameters: ()
 Definition (definition.function):
 int barMixin()
 Lineage: [FooMixin]
 Lineage types: [class]
 
 Name: bar
-Parameters: ()
 Definition (definition.function):
 int bar()
 Lineage: [FooBar]
@@ -66,6 +61,5 @@ class FooBar extends FooClass with Foo {
 }
 
 Name: main
-Parameters: ()
 Definition (definition.function):
 void main()

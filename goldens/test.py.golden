@@ -36,7 +36,6 @@ class Pattern0:
         pass
 
 Name: __init__
-Parameters: (self)
 Definition (definition.constructor):
 def __init__(self):
         pass
@@ -51,7 +50,6 @@ class Pattern0NoDoc:
     """Not a docstring."""
 
 Name: pattern1
-Parameters: (self)
 Definition (definition.function):
 def pattern1(self):
         pass
@@ -59,7 +57,6 @@ Lineage: [Pattern0NoDoc]
 Lineage types: [class]
 
 Name: pattern1
-Parameters: (param1)
 Doc:
 'Pattern 1 docstring.'
 Definition (definition.function):
@@ -68,18 +65,15 @@ def pattern1(param1):
     'Pattern 1 docstring.'
 
 Name: Pattern2a
-Parameters: ()
 Reference (reference.call):
 Pattern2a()
 
 Name: pattern2b
-Parameters: (1)
 Reference (reference.call):
 pattern2b(1)
 
 Name: foo
 Parent: Pattern2a
-Parameters: ()
 Reference (reference.call):
 Pattern2a.foo()
 
@@ -97,7 +91,6 @@ class DecoratedClass:
         """Decorated method docstring."""
 
 Name: decorated_method
-Parameters: (self)
 Doc:
 """Decorated method docstring."""
 Definition (definition.function):
@@ -109,7 +102,6 @@ Lineage: [DecoratedClass]
 Lineage types: [class]
 
 Name: decorated_function
-Parameters: ()
 Doc:
 """Decorated function docstring."""
 Definition (definition.function):

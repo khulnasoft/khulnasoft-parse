@@ -1,5 +1,4 @@
 Name: created
-Parameters: ()
 Definition (definition.function):
 created: function () {
             if (this.value === undefined) {
@@ -8,7 +7,6 @@ created: function () {
         }
 
 Name: foo
-Parameters: ()
 Definition (definition.function):
 function foo() {
         console.log('foo');

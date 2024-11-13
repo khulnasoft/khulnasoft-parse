@@ -9,14 +9,12 @@ Declaration (definition.class):
 service TestService {
   rpc Echo(EchoRequest) returns (EchoResponse) {}
 }
-Lineage: [a b]
-Lineage types: [package package]
 
 Name: Echo
 Declaration (definition.function):
 rpc Echo(EchoRequest) returns (EchoResponse) {}
-Lineage: [a b TestService]
-Lineage types: [package package class]
+Lineage: [TestService]
+Lineage types: [class]
 
 Name: EchoRequest
 Doc:
@@ -25,8 +23,6 @@ Definition (definition.class):
 message EchoRequest {
   string message = 1;
 }
-Lineage: [a b]
-Lineage types: [package package]
 
 Name: EchoResponse
 Doc:
@@ -35,5 +31,3 @@ Definition (definition.class):
 message EchoResponse {
   string message = 1;
 }
-Lineage: [a b]
-Lineage types: [package package]

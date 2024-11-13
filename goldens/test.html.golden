@@ -1,5 +1,4 @@
 Name: fib
-Parameters: (n)
 Definition (definition.function):
 function fib(n) {
         if (n <= 1) {

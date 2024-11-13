@@ -9,8 +9,6 @@ struct Foo2;
 }
 
 Name: baz
-Parameters: (const std::string& bing)
-Return type: bool
 Doc:
 // Declaration.
 Declaration (definition.function):
@@ -42,7 +40,6 @@ class Foo {
 }
 
 Name: Foo
-Parameters: ()
 Doc:
 // Constructor comment.
 Declaration (definition.function):
@@ -51,7 +48,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: Foo
-Parameters: (int /*unused*/)
 Doc:
 // Constructor comment.
 Definition (definition.function):
@@ -60,8 +56,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: foo
-Parameters: ()
-Return type: void
 Doc:
 // foo
 // foo2
@@ -85,8 +79,6 @@ Lineage: [bar bar2]
 Lineage types: [unknown unknown]
 
 Name: baz
-Parameters: (const std::string& bing)
-Return type: bool
 Doc:
 // baz
 Definition (definition.function):
@@ -99,16 +91,12 @@ Lineage: [bar]
 Lineage types: [unknown]
 
 Name: one_pointer
-Parameters: ()
-Return type: bool*
 Doc:
 // one_pointer comment
 Definition (definition.function):
 bool* one_pointer() { return nullptr; }
 
 Name: two_pointer
-Parameters: ()
-Return type: bool**
 Doc:
 // two_pointer comment
 Definition (definition.function):
@@ -125,8 +113,6 @@ class TemplatedFoo {
 };
 
 Name: foo
-Parameters: ()
-Return type: void
 Declaration (definition.function):
 template <typename U>
   void foo();
@@ -134,8 +120,6 @@ Lineage: [TemplatedFoo]
 Lineage types: [class]
 
 Name: foo
-Parameters: ()
-Return type: void
 Doc:
 // Comment.
 Definition (definition.function):
@@ -146,8 +130,6 @@ Lineage: [TemplatedFoo<T>]
 Lineage types: [unknown]
 
 Name: foo<int>
-Parameters: ()
-Return type: void
 Doc:
 // Comment.
 Definition (definition.function):
