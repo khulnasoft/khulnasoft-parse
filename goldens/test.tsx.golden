@@ -1,0 +1,332 @@
+Name: "path/to/file/1"
+Definition (definition.import):
+import { named1, named2 as alias2, named3 as alias3 } from "path/to/file/1";
+Named imports:
+    named1
+    named2 as alias2
+    named3 as alias3
+
+Name: "path/to/file/2"
+Definition (definition.import):
+import default1 from "path/to/file/2";
+Default import: default1
+
+Name: "path/to/file/3"
+Definition (definition.import):
+import { named4 as alias4, named5 as alias5, type NamedType1 as AliasType1 } from "path/to/file/3";
+Named imports:
+    named4 as alias4
+    named5 as alias5
+    NamedType1 as AliasType1
+
+Name: 'npm-lib-1'
+Definition (definition.import):
+import default2, { named4 as alias4 } from 'npm-lib-1'
+Default import: default2
+Named imports:
+    named4 as alias4
+
+Name: "npm-lib-2"
+Definition (definition.import):
+import * as entireModule from "npm-lib-2";
+Namespace: entireModule
+
+Name: "path/to/file/4"
+Definition (definition.import):
+import type { NamedType2 } from "path/to/file/4";
+Named imports:
+    NamedType2
+
+Name: 'npm-lib-3'
+Definition (definition.import):
+import default3 = require('npm-lib-3');
+Default import: default3
+
+Name: "./side-effects-only-1.ts"
+Definition (definition.import):
+import "./side-effects-only-1.ts";
+
+Name: f
+Parameters: (a: string)
+Return type: string
+Doc:
+/** f comment. */
+Declaration (definition.function):
+function f(a: string): string;
+
+Name: f
+Parameters: (a: any)
+Return type: any
+Definition (definition.function):
+function f(a: any): any {
+    import default4 from 'npm-lib-4';
+    return a;
+}
+
+Name: 'npm-lib-4'
+Definition (definition.import):
+import default4 from 'npm-lib-4';
+Lineage: [f]
+Lineage types: [function]
+Default import: default4
+
+Name: f2
+Parameters: (a: number)
+Return type: void
+Doc:
+/** f2 comment. */
+Declaration (definition.function):
+declare function f2(a: number): void;
+
+Name: f3
+Parameters: ()
+Return type: void
+Doc:
+/** f3 comment. */
+Declaration (definition.function):
+export function f3(): void;
+Metadata:
+    is_export = true
+
+Name: f3
+Parameters: ()
+Return type: void
+Definition (definition.function):
+export function f3(): void {}
+Metadata:
+    is_export = true
+
+Name: f4
+Parameters: ()
+Return type: void
+Doc:
+/** f4 comment. */
+Declaration (definition.function):
+export declare function f4(): void;
+Metadata:
+    is_export = true
+
+Name: Foo
+Doc:
+/** Foo comment. */
+Definition (definition.class):
+class Foo {
+    // Constructor comment.
+    constructor() {}
+    /** methodSignature comment. */
+    methodSignature(): void;
+    /** methodSignature comment. */
+    methodSignature(): void {}
+}
+
+Name: constructor
+Parameters: ()
+Doc:
+// Constructor comment.
+Definition (definition.constructor):
+constructor() {}
+Lineage: [Foo]
+Lineage types: [class]
+
+Name: methodSignature
+Parameters: ()
+Return type: void
+Doc:
+/** methodSignature comment. */
+Declaration (definition.method):
+methodSignature(): void
+Lineage: [Foo]
+Lineage types: [class]
+
+Name: methodSignature
+Parameters: ()
+Return type: void
+Doc:
+/** methodSignature comment. */
+Definition (definition.method):
+methodSignature(): void {}
+Lineage: [Foo]
+Lineage types: [class]
+
+Name: Foo2
+Doc:
+/** Foo2 comment. */
+Definition (definition.class):
+declare class Foo2 {
+    /** methodSignature2 comment. */
+    methodSignature2(): void;
+}
+
+Name: methodSignature2
+Parameters: ()
+Return type: void
+Doc:
+/** methodSignature2 comment. */
+Declaration (definition.method):
+methodSignature2(): void
+Lineage: [Foo2]
+Lineage types: [class]
+
+Name: Foo3
+Doc:
+// *Foo3 comment.""
+Definition (definition.class):
+export declare class Foo3 {}
+Metadata:
+    is_export = true
+
+Name: Module
+Doc:
+/** Module comment. */
+Definition (definition.module):
+module Module {}
+
+Name: Module2
+Doc:
+/** Module2 comment. */
+Definition (definition.module):
+export module Module2 {}
+Metadata:
+    is_export = true
+
+Name: 'module'
+Doc:
+/** Module3 comment. */
+Definition (definition.module):
+declare module 'module'
+
+Name: AbstractClass
+Doc:
+/** AbstractClass comment. */
+Definition (definition.class):
+abstract class AbstractClass {
+    /** Abstract method comment. */
+    abstract method(a: string): void;
+}
+
+Name: method
+Parameters: (a: string)
+Return type: void
+Doc:
+/** Abstract method comment. */
+Declaration (definition.method):
+abstract method(a: string): void
+Lineage: [AbstractClass]
+Lineage types: [class]
+
+Name: AbstractClass2
+Doc:
+/** AbstractClass2 comment. */
+Definition (definition.class):
+export abstract class AbstractClass2 {}
+Metadata:
+    is_export = true
+
+Name: AbstractClass3
+Doc:
+/** AbstractClass3 comment. */
+Definition (definition.class):
+declare abstract class AbstractClass3 {}
+
+Name: AbstractClass4
+Doc:
+/** AbstractClass4 comment. */
+Definition (definition.class):
+export declare abstract class AbstractClass4 {}
+Metadata:
+    is_export = true
+
+Name: Interface
+Doc:
+/** Interface comment. */
+Definition (definition.interface):
+interface Interface {
+    /** Interface method comment. */
+    interfaceMethod(a: string): void;
+}
+
+Name: interfaceMethod
+Parameters: (a: string)
+Return type: void
+Doc:
+/** Interface method comment. */
+Declaration (definition.method):
+interfaceMethod(a: string): void
+Lineage: [Interface]
+Lineage types: [interface]
+
+Name: Interface2
+Doc:
+/** Interface2 comment. */
+Definition (definition.interface):
+export interface Interface2 {}
+Metadata:
+    is_export = true
+
+Name: Interface3
+Doc:
+/** Interface3 comment. */
+Definition (definition.interface):
+declare interface Interface3 {}
+
+Name: Interface4
+Doc:
+/** Interface4 comment. */
+Definition (definition.interface):
+export declare interface Interface4 {}
+Metadata:
+    is_export = true
+
+Name: FooString
+Doc:
+/** FooString comment. */
+Definition (definition.type):
+type FooString = string;
+
+Name: FooString2
+Doc:
+/** FooString2 comment. */
+Definition (definition.type):
+export type FooString2 = string;
+Metadata:
+    is_export = true
+
+Name: FooString3
+Doc:
+/** FooString3 comment. */
+Definition (definition.type):
+declare type FooString3 = string;
+
+Name: FooString4
+Doc:
+/** FooString4 comment. */
+Definition (definition.type):
+export declare type FooString4 = string;
+Metadata:
+    is_export = true
+
+Name: NamespaceFoo
+Definition (definition.namespace):
+namespace NamespaceFoo {}
+
+Name: NamespaceFoo2
+Doc:
+/** NamespaceFoo2 comment. */
+Definition (definition.namespace):
+export namespace NamespaceFoo2 {}
+Metadata:
+    is_export = true
+
+Name: NamespaceFoo3
+Doc:
+/** NamespaceFoo3 comment. */
+Definition (definition.namespace):
+declare namespace NamespaceFoo3 {}
+
+Name: NamespaceFoo4
+Doc:
+/** NamespaceFoo4 comment. */
+Definition (definition.namespace):
+export declare namespace NamespaceFoo4 {}
+Metadata:
+    is_export = true

@@ -1,0 +1,72 @@
+Name: test
+Definition (definition.namespace):
+namespace test;
+
+Name: foo
+Parameters: ()
+Definition (definition.function):
+function foo()
+{
+}
+Lineage: [test]
+Lineage types: [namespace]
+
+Name: FooInterface
+Doc:
+// FooInterface.
+Definition (definition.interface):
+interface FooInterface
+{
+    public function encode(...$numbers);
+}
+Lineage: [test]
+Lineage types: [namespace]
+
+Name: encode
+Parameters: (...$numbers)
+Declaration (definition.method):
+public function encode(...$numbers);
+Lineage: [test FooInterface]
+Lineage types: [namespace interface]
+
+Name: FooClass
+Doc:
+// FooClass.
+Definition (definition.class):
+class FooClass implements FooInterface
+{
+    // Constructor comment.
+    function __construct() {}
+    /**
+     * @param mixed $numbers
+     * @return string
+     */
+    public function encode(...$numbers)
+    {
+    }
+}
+Lineage: [test]
+Lineage types: [namespace]
+
+Name: __construct
+Parameters: ()
+Doc:
+// Constructor comment.
+Definition (definition.method):
+function __construct() {}
+Lineage: [test FooClass]
+Lineage types: [namespace class]
+
+Name: encode
+Parameters: (...$numbers)
+Doc:
+/**
+     * @param mixed $numbers
+     * @return string
+     */
+Definition (definition.method):
+public function encode(...$numbers)
+    {
+    }
+Lineage: [test FooClass]
+Lineage types: [namespace class]

@@ -1,0 +1,228 @@
+Name: "path/to/file/1"
+Definition (definition.import):
+import { named1, named2 as alias2, named3 as alias3 } from "path/to/file/1";
+Named imports:
+    named1
+    named2 as alias2
+    named3 as alias3
+
+Name: "path/to/file/2"
+Definition (definition.import):
+import default1 from "path/to/file/2";
+Default import: default1
+
+Name: 'npm-lib-1'
+Definition (definition.import):
+import default2, { named4 as alias4 } from 'npm-lib-1'
+Default import: default2
+Named imports:
+    named4 as alias4
+
+Name: "npm-lib-2"
+Definition (definition.import):
+import * as entireModule from "npm-lib-2";
+Namespace: entireModule
+
+Name: "./side-effects-only-1.js"
+Definition (definition.import):
+import "./side-effects-only-1.js";
+
+Name: Pattern1a
+Doc:
+/**
+ * Pattern 1a comment.
+ */
+Definition (definition.class):
+class Pattern1a {
+  constructor() {}
+  /**
+   * Pattern 0 comment.
+   */
+  pattern0(param1) {
+    const moment = require('moment');
+    return param1;
+  }
+}
+
+Name: constructor
+Parameters: ()
+Definition (definition.constructor):
+constructor() {}
+Lineage: [Pattern1a]
+Lineage types: [class]
+
+Name: pattern0
+Parameters: (param1)
+Doc:
+/**
+   * Pattern 0 comment.
+   */
+Definition (definition.method):
+pattern0(param1) {
+    const moment = require('moment');
+    return param1;
+  }
+Lineage: [Pattern1a]
+Lineage types: [class]
+
+Name: Pattern1b
+Doc:
+// Pattern 1b comment.
+Definition (definition.class):
+export class Pattern1b {}
+Metadata:
+    is_export = true
+
+Name: pattern2
+Parameters: (param1)
+Doc:
+// Pattern 2 comment.
+// More pattern 2 comment.
+/* Even more
+ * pattern 2 comment.
+ */
+Definition (definition.function):
+function pattern2(param1) {
+  return param1;
+}
+
+Name: f
+Parameters: ()
+Doc:
+// f comment.
+Definition (definition.function):
+export function f() {}
+Metadata:
+    is_export = true
+
+Name: g
+Parameters: ()
+Doc:
+// g comment.
+Definition (definition.function):
+function* g() {}
+
+Name: pattern3
+Parameters: (param1)
+Doc:
+/**
+ * Pattern 3 comment.
+ */
+Definition (definition.function):
+export default function* pattern3(param1) {
+  yield param1;
+}
+Metadata:
+    is_export = true
+
+Name: pattern4a
+Parameters: (param1)
+Doc:
+/**
+ * Pattern 4a comment.
+ */
+Definition (definition.function):
+const pattern4a = function (param1) {
+  return param1;
+};
+
+Name: pattern4b
+Parameters: (param1)
+Doc:
+/**
+ * Pattern 4b comment.
+ */
+Definition (definition.function):
+export const pattern4b = (param1) => param1;
+Metadata:
+    is_export = true
+
+Name: pattern5a
+Parameters: (param1)
+Doc:
+/**
+ * Pattern 5a comment.
+ */
+Definition (definition.function):
+export var pattern5a = function (param1) {
+  return param1;
+};
+Metadata:
+    is_export = true
+
+Name: pattern5b
+Parameters: (param1)
+Doc:
+/**
+ * Pattern 5b comment.
+ */
+Definition (definition.function):
+var pattern5b = (param1) => {};
+
+Name: pattern6a
+Parameters: (a)
+Doc:
+// Pattern 6a comment.
+Definition (definition.function):
+pattern6a = function(a) {};
+
+Name: pattern6b
+Parameters: (b)
+Doc:
+// Pattern 6b comment.
+Definition (definition.function):
+pattern6b = (b) => {};
+
+Name: member
+Parameters: (c)
+Doc:
+// Pattern 6c comment.
+Definition (definition.function):
+pattern6c.member = function(c) {};
+
+Name: member
+Parameters: (d)
+Doc:
+// Pattern 6d comment.
+Definition (definition.function):
+pattern6d.member = (d) => {};
+
+Name: pattern7a
+Parameters: (a)
+Doc:
+// Pattern 7a comment.
+Definition (definition.function):
+pattern7a: function(a) {}
+
+Name: pattern7b
+Parameters: (b)
+Doc:
+// Pattern 7b comment.
+Definition (definition.function):
+pattern7b: (b) => {}
+
+Name: pattern8
+Reference (reference.call):
+pattern8(a)
+
+Name: member
+Reference (reference.call):
+pattern9.member(a)
+
+Name: Pattern10
+Reference (reference.class):
+new Pattern10(a)
+
+Name: Pattern11
+Doc:
+// Comment
+Definition (definition.class):
+const Pattern11 = class Ignore {};
+
+Name: Pattern12
+Doc:
+// Comment
+Definition (definition.class):
+export var Pattern12 = class Ignore {};
+Metadata:
+    is_export = true

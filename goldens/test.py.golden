@@ -1,0 +1,119 @@
+Name: foo
+Definition (definition.import):
+from foo import decorated1
+Default import: foo
+Named imports:
+    decorated1
+
+Name: foo
+Definition (definition.import):
+from foo import decorated2
+Default import: foo
+Named imports:
+    decorated2
+
+Name: foo
+Definition (definition.import):
+from foo import Pattern2a
+Default import: foo
+Named imports:
+    Pattern2a
+
+Name: foo
+Definition (definition.import):
+from foo import pattern2b
+Default import: foo
+Named imports:
+    pattern2b
+
+Name: Pattern0
+Doc:
+"""Pattern 0 docstring."""
+Definition (definition.class):
+class Pattern0:
+    """Pattern 0 docstring."""
+    def __init__(self):
+        pass
+
+Name: __init__
+Parameters: (self)
+Definition (definition.constructor):
+def __init__(self):
+        pass
+Lineage: [Pattern0]
+Lineage types: [class]
+
+Name: Pattern0NoDoc
+Definition (definition.class):
+class Pattern0NoDoc:
+    def pattern1(self):
+        pass
+    """Not a docstring."""
+
+Name: pattern1
+Parameters: (self)
+Definition (definition.function):
+def pattern1(self):
+        pass
+Lineage: [Pattern0NoDoc]
+Lineage types: [class]
+
+Name: pattern1
+Parameters: (param1)
+Doc:
+'Pattern 1 docstring.'
+Definition (definition.function):
+def pattern1(param1):
+    # Docstring doesn't come immediately after. Also tests single quotes.
+    'Pattern 1 docstring.'
+
+Name: Pattern2a
+Parameters: ()
+Reference (reference.call):
+Pattern2a()
+
+Name: pattern2b
+Parameters: (1)
+Reference (reference.call):
+pattern2b(1)
+
+Name: foo
+Parent: Pattern2a
+Parameters: ()
+Reference (reference.call):
+Pattern2a.foo()
+
+Name: DecoratedClass
+Doc:
+"""Decorated class docstring."""
+Definition (definition.class):
+@decorated1
+@decorated2
+class DecoratedClass:
+    """Decorated class docstring."""
+    @decorated1
+    @decorated2
+    def decorated_method(self):
+        """Decorated method docstring."""
+
+Name: decorated_method
+Parameters: (self)
+Doc:
+"""Decorated method docstring."""
+Definition (definition.function):
+@decorated1
+    @decorated2
+    def decorated_method(self):
+        """Decorated method docstring."""
+Lineage: [DecoratedClass]
+Lineage types: [class]
+
+Name: decorated_function
+Parameters: ()
+Doc:
+"""Decorated function docstring."""
+Definition (definition.function):
+@decorated1
+@decorated2
+def decorated_function():
+    """Decorated function docstring."""
