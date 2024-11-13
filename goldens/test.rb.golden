@@ -18,7 +18,6 @@ class SomeClass
 end
 
 Name: empty_parens
-Parameters: ()
 Doc:
 # In ruby, the parentheses can be omitted in many circumstances
 # This is probably a job for the AST, but we'll add a test here anyway
@@ -177,7 +176,6 @@ Reference (reference.call):
 alias_method :really_not_so_simple, :simple
 
 Name: unparenthesized
-Parameters: arg1, arg2
 Definition (definition.method):
 def unparenthesized arg1, arg2
       arg2, arg1 = arg1, arg2
@@ -186,7 +184,6 @@ Lineage: [Test SubTest MyClass]
 Lineage types: [unknown module class]
 
 Name: optional_param
-Parameters: (arg1, arg2 = "fine")
 Definition (definition.method):
 def optional_param(arg1, arg2 = "fine")
       nil

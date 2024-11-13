@@ -25,7 +25,6 @@ Lineage: [FooClass]
 Lineage types: [class]
 
 Name: foo2
-Parameters: ()
 Doc:
 # foo2 comment
 Definition (definition.function):
@@ -35,14 +34,12 @@ sub foo2 () {
 }
 
 Name: new
-Parameters: ($class, $firstName, $lastName)
 Definition (definition.function):
 sub new ($class, $firstName, $lastName) {
     bless { firstName => $firstName, lastName => $lastName }, $class
 }
 
 Name: getFirstName
-Parameters: ($self)
 Definition (definition.function):
 sub getFirstName($self) {
     $self->{firstName}

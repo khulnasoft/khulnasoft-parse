@@ -47,16 +47,12 @@ Definition (definition.import):
 import "./side-effects-only-1.ts";
 
 Name: f
-Parameters: (a: string)
-Return type: string
 Doc:
 /** f comment. */
 Declaration (definition.function):
 function f(a: string): string;
 
 Name: f
-Parameters: (a: any)
-Return type: any
 Definition (definition.function):
 function f(a: any): any {
     import default4 from 'npm-lib-4';
@@ -71,16 +67,12 @@ Lineage types: [function]
 Default import: default4
 
 Name: f2
-Parameters: (a: number)
-Return type: void
 Doc:
 /** f2 comment. */
 Declaration (definition.function):
 declare function f2(a: number): void;
 
 Name: f3
-Parameters: ()
-Return type: void
 Doc:
 /** f3 comment. */
 Declaration (definition.function):
@@ -89,16 +81,12 @@ Metadata:
     is_export = true
 
 Name: f3
-Parameters: ()
-Return type: void
 Definition (definition.function):
 export function f3(): void {}
 Metadata:
     is_export = true
 
 Name: f4
-Parameters: ()
-Return type: void
 Doc:
 /** f4 comment. */
 Declaration (definition.function):
@@ -120,7 +108,6 @@ class Foo {
 }
 
 Name: constructor
-Parameters: ()
 Doc:
 // Constructor comment.
 Definition (definition.constructor):
@@ -129,8 +116,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: methodSignature
-Parameters: ()
-Return type: void
 Doc:
 /** methodSignature comment. */
 Declaration (definition.method):
@@ -139,8 +124,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: methodSignature
-Parameters: ()
-Return type: void
 Doc:
 /** methodSignature comment. */
 Definition (definition.method):
@@ -158,8 +141,6 @@ declare class Foo2 {
 }
 
 Name: methodSignature2
-Parameters: ()
-Return type: void
 Doc:
 /** methodSignature2 comment. */
 Declaration (definition.method):
@@ -205,8 +186,6 @@ abstract class AbstractClass {
 }
 
 Name: method
-Parameters: (a: string)
-Return type: void
 Doc:
 /** Abstract method comment. */
 Declaration (definition.method):
@@ -246,8 +225,6 @@ interface Interface {
 }
 
 Name: interfaceMethod
-Parameters: (a: string)
-Return type: void
 Doc:
 /** Interface method comment. */
 Declaration (definition.method):

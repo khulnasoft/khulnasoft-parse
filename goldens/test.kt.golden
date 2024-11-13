@@ -22,7 +22,6 @@ class Foo(param1: Int, param2: Int) {
 }
 
 Name: constructor
-Parameters: (param1: Int, param2: Int)
 Doc:
 /**
    * Constructor docstring
@@ -36,7 +35,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: methodWithDocstring
-Parameters: ()
 Doc:
 /** Method docstring */
 Definition (definition.function):
@@ -45,7 +43,6 @@ Lineage: [Foo]
 Lineage types: [class]
 
 Name: fib
-Parameters: (n: Int)
 Definition (definition.function):
 fun fib(n: Int): Int {
   if (n == 0 || n == 1) {
