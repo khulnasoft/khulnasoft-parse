@@ -37,3 +37,18 @@
     path: (_) @name
   ) @definition.import
 )
+
+;; Additional patterns for capturing function pointers
+(
+  (comment)* @doc
+  .
+  (declaration
+    type: (pointer_declarator
+      declarator: (function_declarator
+        declarator: (identifier) @name
+        parameters: (parameter_list) @khulnasoft.parameters
+      )
+    )
+  ) @definition.function_pointer
+  (#select-adjacent! @doc @definition.function_pointer)
+)
