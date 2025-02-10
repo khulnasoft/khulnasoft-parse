@@ -83,3 +83,15 @@
     body: (_) @body) @definition.method
   (#select-adjacent! @doc @definition.method)
 )
+
+;; Additional patterns for capturing record declarations
+(
+  (comment)* @doc
+  .
+  (record_declaration
+    name: (identifier) @name
+    parameters: (parameter_list) @khulnasoft.parameters
+    body: (declaration_list)? @body
+  ) @definition.record
+  (#select-adjacent! @doc @definition.record)
+)
