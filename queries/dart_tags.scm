@@ -61,3 +61,18 @@
   ) @definition.function
   (#select-adjacent! @doc @definition.function)
 )
+
+;; Additional patterns for capturing mixin declarations
+(
+  [
+    (documentation_comment)
+  ]* @doc
+  .
+  (mixin_declaration
+    (mixin)
+    .
+    (identifier) @name
+    (class_body)? @body
+  ) @definition.mixin
+  (#select-adjacent! @doc @definition.mixin)
+)

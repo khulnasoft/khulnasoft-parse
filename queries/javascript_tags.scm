@@ -67,3 +67,14 @@
   (#select-adjacent! @doc @definition.class)
   (#set! is_export true)
 )
+
+;; Additional patterns for capturing class declarations
+(
+  (comment)* @doc
+  .
+  (class_declaration
+    name: (identifier) @name
+    body: (class_body)? @body
+  ) @definition.class
+  (#select-adjacent! @doc @definition.class)
+)

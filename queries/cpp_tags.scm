@@ -134,3 +134,16 @@
   (#select-adjacent! @doc @definition.function)
   (#lineage-from-name! "::")
 )
+
+;; Additional patterns for capturing template declarations
+(
+  (comment)* @doc
+  .
+  (template_declaration
+    name: (_) @name
+    parameters: (template_parameter_list) @khulnasoft.parameters
+    body: (field_declaration_list) @body
+  ) @definition.template
+  (#select-adjacent! @doc @definition.template)
+  (#lineage-from-name! "::")
+)
