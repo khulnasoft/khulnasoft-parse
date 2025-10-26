@@ -1,4 +1,4 @@
-; Method definitions
+;; Method definitions
 
 (
   (comment)* @doc
