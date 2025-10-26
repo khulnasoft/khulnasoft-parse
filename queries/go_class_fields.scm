@@ -1,3 +1,4 @@
+;; Captures field declarations in Go struct types
 (type_declaration
     (type_spec
         type: (struct_type
