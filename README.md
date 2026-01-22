@@ -1,6 +1,6 @@
 ## KhulnaSoft parse
 
-[![Twitter Follow](https://img.shields.io/badge/style--blue?style=social&logo=twitter&label=Follow%20%40khulnasoftdev)](https://twitter.com/intent/follow?screen_name=khulnasoftdev)
+[![Twitter Follow](https://img.shields.io/badge/style--blue?style=social&logo=twitter&label=Follow%20%40khulnasoft)](https://twitter.com/intent/follow?screen_name=khulnasoft)
 ![License](https://img.shields.io/github/license/KhulnaSoft/khulnasoft-parse)
 [![Docs](https://img.shields.io/badge/khulnasoft%20Docs-09B6A2)](https://docs.khulnasoft.com)
 [![Canny Board](https://img.shields.io/badge/Feature%20Requests-6b69ff)](https://khulnasoft.canny.io/feature-requests/)
@@ -9,7 +9,6 @@
 [![Visual Studio](https://img.shields.io/visual-studio-marketplace/i/khulnasoft.khulnasoft?label=Visual%20Studio&logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=khulnasoft.khulnasoft)
 [![JetBrains](https://img.shields.io/jetbrains/plugin/d/20540?label=JetBrains)](https://plugins.jetbrains.com/plugin/20540-khulnasoft/)
 [![Open VSX](https://img.shields.io/open-vsx/dt/khulnasoft/khulnasoft?label=Open%20VSX)](https://open-vsx.org/extension/khulnasoft/khulnasoft)
-[![Google Chrome](https://img.shields.io/chrome-web-store/users/hobjkcpmjhlegmobgonaagepfckjkceh?label=Google%20Chrome&logo=googlechrome&logoColor=FFFFFF)](https://chrome.google.com/webstore/detail/khulnasoft/hobjkcpmjhlegmobgonaagepfckjkceh)
 
 # khulnasoft-parse
 
