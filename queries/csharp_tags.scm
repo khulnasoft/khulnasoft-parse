@@ -1,23 +1,9 @@
-(file_scoped_namespace_declaration
-  name: (identifier) @name) @definition.namespace
-(namespace_declaration
-  name: (identifier) @name) @definition.namespace
-
 (
   (comment)* @doc
   .
   (struct_declaration
     name: (identifier) @name
     body: (declaration_list) @body) @definition.class
-  (#select-adjacent! @doc @definition.class)
-)
-
-(
-  (comment)* @doc
-  .
-  (record_declaration
-    name: (identifier) @name
-    body: (declaration_list)? @body) @definition.class
   (#select-adjacent! @doc @definition.class)
 )
 
@@ -51,8 +37,8 @@
 (
   (comment)* @doc
   .
-  (operator_declaration
-    operator: _ @name
+  (method_declaration
+    name: (identifier) @name
     body: (_) @body) @definition.method
   (#select-adjacent! @doc @definition.method)
 )
@@ -66,32 +52,3 @@
   (#select-adjacent! @doc @definition.constructor)
 )
 
-(
-  (comment)* @doc
-  .
-  (destructor_declaration
-    name: (identifier) @name
-    body: (_) @body) @definition.destructor
-  (#select-adjacent! @doc @definition.destructor)
-)
-
-(
-  (comment)* @doc
-  .
-  (method_declaration
-    name: (identifier) @name
-    body: (_) @body) @definition.method
-  (#select-adjacent! @doc @definition.method)
-)
-
-;; Additional patterns for capturing record declarations
-(
-  (comment)* @doc
-  .
-  (record_declaration
-    name: (identifier) @name
-    parameters: (parameter_list) @khulnasoft.parameters
-    body: (declaration_list)? @body
-  ) @definition.record
-  (#select-adjacent! @doc @definition.record)
-)

@@ -40,11 +40,19 @@ mixin FooMixin {
     }
 }
 
+Name: FooMixin
+Definition (definition.mixin):
+mixin FooMixin {
+    int barMixin() {
+        return 0;
+    }
+}
+
 Name: barMixin
 Definition (definition.function):
 int barMixin()
 Lineage: [FooMixin]
-Lineage types: [class]
+Lineage types: [mixin]
 
 Name: bar
 Definition (definition.function):
