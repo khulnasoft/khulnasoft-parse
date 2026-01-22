@@ -18,6 +18,15 @@ fi
 VERSION="${1:-v0.0.17}"
 
 echo "Downloading parse binary..."
+if ! command -v curl &> /dev/null; then
+    echo "ERROR: curl is required but not installed"
+    exit 1
+fi
+
+# Get version
+VERSION="${1:-v0.0.17}"
+
+echo "Downloading parse binary..."
 echo "Version: $VERSION"
 
 # Clean up previous downloads

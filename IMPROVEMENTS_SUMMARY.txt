@@ -32,7 +32,7 @@ PROJECT STATUS: ✅ COMPLETE - Ready for Production
        ├── cpp_enums.scm            - Enum declarations, scoped enums
        └── cpp_exceptions.scm       - Try-catch, exception specifications
 
-📚 NEW DOCUMENTATION (6 Files, ~2,500 Lines)
+📚 NEW DOCUMENTATION (8 Files, ~2,500 Lines)
    ├── CONTRIBUTING.md               - Contribution guidelines (~400 lines)
    ├── QUERY_PATTERNS.md            - Pattern reference (~600 lines)
    ├── CODE_REVIEW.md               - Code review analysis (~200 lines)

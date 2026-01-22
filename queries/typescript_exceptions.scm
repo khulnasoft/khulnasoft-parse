@@ -5,9 +5,9 @@
 (
   (try_statement
     body: (statement_block) @body
-    (catch_clause
+    ((catch_clause
       (parameter) @error_param
-      body: (statement_block) @catch_body) @reference.exception+) @definition.exception_handler
+      body: (statement_block) @catch_body) @reference.exception)+) @definition.exception_handler
   (#set! handler_type "try_catch")
 )
 

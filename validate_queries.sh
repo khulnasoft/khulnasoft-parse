@@ -14,13 +14,20 @@ if [ ! -f "./parse" ]; then
     exit 1
 fi
 
-# Validate parse binary with a simple query
-if ! ./parse -file /dev/null -help > /dev/null 2>&1; then
-    echo "ERROR: parse binary not functional"
+# Validate parse binary is executable
+if [ ! -x "./parse" ]; then
+    echo "ERROR: parse binary not executable. Set permissions with: chmod +x ./parse"
     exit 1
 fi
 
 LANGUAGE_PATTERN="${1:-.}"
+# Escape regex special characters for safe glob expansion
+# Preserve default pattern to match all files
+if [ "$LANGUAGE_PATTERN" = "." ]; then
+    LANGUAGE_PATTERN_SAFE=""
+else
+    LANGUAGE_PATTERN_SAFE=$(printf '%s\n' "$LANGUAGE_PATTERN" | sed 's/[[\.^$*]/\\&/g')
+fi
 ERRORS=0
 WARNINGS=0
 CHECKED=0
@@ -29,7 +36,7 @@ echo "Validating tree-sitter queries..."
 echo "=================================="
 
 # Find all .scm files matching pattern
-for query_file in queries/*${LANGUAGE_PATTERN}*.scm; do
+for query_file in queries/*${LANGUAGE_PATTERN_SAFE}*.scm; do
     if [ ! -f "$query_file" ]; then
         continue
     fi
@@ -56,15 +63,22 @@ for query_file in queries/*${LANGUAGE_PATTERN}*.scm; do
     # Try to run parse with this query file
     echo -n "✓ Checking $filename ... "
     
-    if ./parse -file "$test_file" -use_tags_query -tags_query_dir "queries" > /dev/null 2>&1; then
+    # Capture error details in temporary file for secure handling
+    error_log="/tmp/query_error_$$.log"
+    if ./parse -file "$test_file" -use_tags_query -tags_query_dir "queries" > /dev/null 2> "$error_log"; then
         echo "OK"
     else
-        # Extract more info about the error
-        error_output=$(./parse -file "$test_file" -use_tags_query -tags_query_dir "queries" 2>&1 || true)
         echo "FAILED"
-        echo "  Error: $error_output"
+        # Extract and sanitize error output - show first line only to prevent information leakage
+        if [ -s "$error_log" ]; then
+            error_line=$(head -1 "$error_log" | cut -c1-120)
+            echo "  Error: $error_line"
+        else
+            echo "  Error: Unknown error (no details available)"
+        fi
         ((ERRORS++))
     fi
+    rm -f "$error_log"
 done
 
 echo "=================================="

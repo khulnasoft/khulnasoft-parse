@@ -23,8 +23,8 @@
   (type_declaration
     (type_spec
       name: (type_identifier) @name
-      type: (_) @type_definition) @definition.type
-  (#not-match? @definition.type "^type (struct|interface)")
+      type: (_) @type_definition
+      (#not-match? @type_definition "^(struct|interface)")) @definition.type)
 )
 
 ;; 3. Interface type definitions

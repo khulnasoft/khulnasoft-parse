@@ -1,5 +1,5 @@
-#!/usr/bin/bash -e
-set -euo pipefail
+#!/usr/bin/bash
+set -uo pipefail
 
 # Script: Test Query Correctness
 # Description: Compares current parse output against golden files
@@ -28,6 +28,13 @@ fi
 
 # Optional: filter test files by pattern
 TEST_PATTERN="${1:-.}"
+# Escape regex special characters in TEST_PATTERN for safe grep usage
+# But preserve default pattern to match any file
+if [ "$TEST_PATTERN" = "." ]; then
+    TEST_PATTERN_ESCAPED="."
+else
+    TEST_PATTERN_ESCAPED=$(printf '%s\n' "$TEST_PATTERN" | sed 's/[[\.^$*/]/\\&/g')
+fi
 FAILED_TESTS=0
 PASSED_TESTS=0
 
@@ -38,21 +45,25 @@ for test_file in test_files/*; do
     test_file="$(basename "$test_file")"
     
     # Skip if doesn't match pattern
-    if ! echo "$test_file" | grep -q "$TEST_PATTERN"; then
+    if ! echo "$test_file" | grep -q "$TEST_PATTERN_ESCAPED"; then
         continue
     fi
     
     echo -n "Testing $test_file ... "
     
-    # Generate temporary output
-    if ! ./parse -file "test_files/$test_file" -use_tags_query -tags_query_dir "queries" > "goldens/$test_file.golden.tmp" 2>/dev/null; then
+    # Generate temporary output and capture stderr for debugging
+    error_log="/tmp/parse_error_$$.log"
+    if ! ./parse -file "test_files/$test_file" -use_tags_query -tags_query_dir "queries" > "goldens/$test_file.golden.tmp" 2> "$error_log"; then
         echo "FAILED (parse error)"
+        # Log error details for debugging without exposing to normal output
+        if [ -s "$error_log" ]; then
+            echo "  [Debug: $(head -c 100 "$error_log")...]" >&2
+        fi
         ((FAILED_TESTS++))
-        rm -f "goldens/$test_file.golden.tmp"
+        rm -f "goldens/$test_file.golden.tmp" "$error_log"
         continue
     fi
-    
-    # Compare with golden file
+    rm -f "$error_log"
     if diff -q "goldens/$test_file.golden" "goldens/$test_file.golden.tmp" > /dev/null; then
         echo "PASSED"
         ((PASSED_TESTS++))

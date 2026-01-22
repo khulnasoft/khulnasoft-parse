@@ -5,10 +5,10 @@
 (
   (try_statement
     body: (_) @body
-    (except_clause
+    ((except_clause
       (exception_type)? @exception_type
       (identifier)? @exception_name
-      body: (_) @handler_body) @reference.exception+) @definition.exception_handler
+      body: (_) @handler_body) @reference.exception)+) @definition.exception_handler
   (#set! handler_type "except")
 )
 

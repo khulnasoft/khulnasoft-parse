@@ -5,11 +5,11 @@
 (
   (try_statement
     body: (block) @body
-    (catch_clause
+    ((catch_clause
       (catch_formal_parameter
         type: (type_identifier) @exception_type
         name: (identifier) @exception_var)
-      body: (block) @catch_body) @reference.exception+) @definition.exception_handler
+      body: (block) @catch_body) @reference.exception)+) @definition.exception_handler
   (#set! handler_type "try_catch")
 )
 
