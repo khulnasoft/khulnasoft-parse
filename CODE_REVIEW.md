@@ -1,7 +1,7 @@
 # KhulnaSoft Parse - Code Review & Enhancement Report
 
 ## Executive Summary
-This is a well-structured tree-sitter based code parsing project with comprehensive language support. The following review identifies areas for enhancement and provides recommendations for expanding functionality.
+This is a well-structured tree-sitter-based code parsing project with comprehensive language support. The following review identifies areas for enhancement and provides recommendations for expanding functionality.
 
 ---
 

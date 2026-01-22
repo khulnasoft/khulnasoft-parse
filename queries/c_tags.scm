@@ -43,7 +43,8 @@
   (comment)* @doc
   .
   (declaration
-    type: (pointer_declarator
+    type: (_)? @khulnasoft.return_type
+    declarator: (pointer_declarator
       declarator: (function_declarator
         declarator: (identifier) @name
         parameters: (parameter_list) @khulnasoft.parameters

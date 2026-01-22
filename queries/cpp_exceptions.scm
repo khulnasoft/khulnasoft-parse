@@ -5,11 +5,11 @@
 (
   (try_statement
     body: (compound_statement) @body
-    (catch_clause
+    ((catch_clause
       (parameter_declaration
         type: (_) @exception_type
         declarator: (identifier)? @exception_var)
-      body: (compound_statement) @catch_body) @reference.exception+) @definition.exception_handler
+      body: (compound_statement) @catch_body) @reference.exception)+) @definition.exception_handler
   (#set! handler_type "try_catch")
 )
 

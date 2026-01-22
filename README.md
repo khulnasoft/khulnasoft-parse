@@ -9,7 +9,6 @@
 [![Visual Studio](https://img.shields.io/visual-studio-marketplace/i/khulnasoft.khulnasoft?label=Visual%20Studio&logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=khulnasoft.khulnasoft)
 [![JetBrains](https://img.shields.io/jetbrains/plugin/d/20540?label=JetBrains)](https://plugins.jetbrains.com/plugin/20540-khulnasoft/)
 [![Open VSX](https://img.shields.io/open-vsx/dt/khulnasoft/khulnasoft?label=Open%20VSX)](https://open-vsx.org/extension/khulnasoft/khulnasoft)
-[![Google Chrome](https://img.shields.io/chrome-web-store/users/hobjkcpmjhlegmobgonaagepfckjkceh?label=Google%20Chrome&logo=googlechrome&logoColor=FFFFFF)](https://chrome.google.com/webstore/detail/khulnasoft/hobjkcpmjhlegmobgonaagepfckjkceh)
 
 # khulnasoft-parse
 

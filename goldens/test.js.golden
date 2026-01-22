@@ -27,28 +27,9 @@ Name: "./side-effects-only-1.js"
 Definition (definition.import):
 import "./side-effects-only-1.js";
 
-Name: Pattern1a
-Doc:
-/**
- * Pattern 1a comment.
- */
-Definition (definition.class):
-class Pattern1a {
-  constructor() {}
-  /**
-   * Pattern 0 comment.
-   */
-  pattern0(param1) {
-    const moment = require('moment');
-    return param1;
-  }
-}
-
 Name: constructor
 Definition (definition.constructor):
 constructor() {}
-Lineage: [Pattern1a]
-Lineage types: [class]
 
 Name: pattern0
 Doc:
@@ -60,16 +41,6 @@ pattern0(param1) {
     const moment = require('moment');
     return param1;
   }
-Lineage: [Pattern1a]
-Lineage types: [class]
-
-Name: Pattern1b
-Doc:
-// Pattern 1b comment.
-Definition (definition.class):
-export class Pattern1b {}
-Metadata:
-    is_export = true
 
 Name: pattern2
 Doc:
@@ -196,17 +167,3 @@ pattern9.member(a)
 Name: Pattern10
 Reference (reference.class):
 new Pattern10(a)
-
-Name: Pattern11
-Doc:
-// Comment
-Definition (definition.class):
-const Pattern11 = class Ignore {};
-
-Name: Pattern12
-Doc:
-// Comment
-Definition (definition.class):
-export var Pattern12 = class Ignore {};
-Metadata:
-    is_export = true

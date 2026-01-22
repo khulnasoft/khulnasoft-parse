@@ -95,15 +95,4 @@
   ) @definition.method
 )
 
-;; Additional patterns for capturing interface types
-(
-  (comment)* @doc
-  .
-  (type_declaration
-    (type_spec
-      name: (type_identifier) @name
-      type: (interface_type
-        (method_spec_list
-          (method_spec) @method)))) @definition.interface_type
-  (#select-adjacent! @doc @definition.interface_type)
-)
+

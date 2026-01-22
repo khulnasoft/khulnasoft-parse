@@ -6,12 +6,6 @@ created: function () {
             }
         }
 
-Name: foo
-Definition (definition.function):
-function foo() {
-        console.log('foo');
-    }
-
 Name: log
 Reference (reference.call):
 console.log('foo')
