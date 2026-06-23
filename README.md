@@ -1,190 +1,178 @@
-## KhulnaSoft parse
+# 🔬 khulnasoft-parse
 
-[![Twitter Follow](https://img.shields.io/badge/style--blue?style=social&logo=twitter&label=Follow%20%40khulnasoft)](https://twitter.com/intent/follow?screen_name=khulnasoft)
-![License](https://img.shields.io/github/license/KhulnaSoft/khulnasoft-parse)
-[![Docs](https://img.shields.io/badge/khulnasoft%20Docs-09B6A2)](https://docs.khulnasoft.com)
-[![Canny Board](https://img.shields.io/badge/Feature%20Requests-6b69ff)](https://khulnasoft.canny.io/feature-requests/)
-[![built with khulnasoft](https://khulnasoft.com/badges/main)](https://khulnasoft.com?repo_name=exafunction%2Fkhulnasoft-parse)
+<p>
+  <b>🧬 Multi‑layer Static + Semantic + Graph + AI Code Intelligence Engine</b>
+</p>
 
-[![Visual Studio](https://img.shields.io/visual-studio-marketplace/i/khulnasoft.khulnasoft?label=Visual%20Studio&logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=khulnasoft.khulnasoft)
-[![JetBrains](https://img.shields.io/jetbrains/plugin/d/20540?label=JetBrains)](https://plugins.jetbrains.com/plugin/20540-khulnasoft/)
-[![Open VSX](https://img.shields.io/open-vsx/dt/khulnasoft/khulnasoft?label=Open%20VSX)](https://open-vsx.org/extension/khulnasoft/khulnasoft)
+---
 
-# khulnasoft-parse
+## 🏗️ Architecture
 
-## _A command line tool for parsing code syntax_
-
-This repository contains a binary built with [tree-sitter](https://github.com/tree-sitter/tree-sitter) that lets you:
-* Inspect the concrete syntax tree of a source file
-* Use pre-written tree-sitter query files to locate important symbols in source code
-* Format output in JSON to use the results in your own applications
-
-In particular, this repo provides a binary prepackaged with:
-* A recent version of the tree-sitter library
-* A large number of tree-sitter grammars
-* An implementation of many common query predicates
-
-Contributions are welcome and we encourage using this tool for any applications that involve code syntax analysis. For example, these queries are used by [khulnasoft Search](https://www.khulnasoft.com/about_khulnasoft_search) to index code locally for repo-wide semantic search. If you use khulnasoft Search, adding queries for your language here will enable it to work better on your own code!
-
-## Example
-
-(Requires [fd](https://github.com/sharkdp/fd) and [jq](https://github.com/stedolan/jq).)
-
-```shell
-# Print all names and arguments from function definitions.
-fd -e js \
-  | xargs -i ./parse -quiet -use_tags_query -json -json_include_path -file '{}' \
-  | jq -r '.
-    | select(.captures."definition.function" != null)
-    | .file + ":" + .captures.name[0].text + .captures."khulnasoft.parameters"[0].text'
-# Output:
-# examples/example.js:add(a, b)
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                        🖥️  CLI Layer                            │
+│   parse │ inspect │ query │ ai │ report │ diff │ watch          │
+└───────────────────────────┬──────────────────────────────────────┘
+                            │
+┌───────────────────────────▼──────────────────────────────────────┐
+│                    🧠  System Kernel                             │
+│               Pipeline: Parse → Normalize → Analyze → Graph      │
+└───────────────────────────┬──────────────────────────────────────┘
+                            │
+              ┌─────────────┼─────────────┬────────────────┐
+              ▼             ▼             ▼                ▼
+┌─────────────────────┐ ┌─────────┐ ┌──────────┐ ┌──────────────┐
+│  📐  AST Engine     │ │ 🧬      │ │ 🌐       │ │ 🤖           │
+│  (tree-sitter)      │ │ Semantic│ │ Graph    │ │ AI Engine    │
+│  30+ languages      │ │ Layer   │ │ Engine   │ │ explain      │
+│                     │ │ tags    │ │ traversal│ │ review       │
+│                     │ │ intent  │ │ impact   │ │ design       │
+└─────────────────────┘ └─────────┘ └──────────┘ └──────────────┘
+                            │             │
+                            └──────┬──────┘
+                                   ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                    💾  Index / Memory Layer                      │
+│              SQLite Store │ LRU Cache │ Workspace Manager        │
+│              File Watcher │ Incremental Parser                   │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-## Getting started
+---
 
-```console
-$ ./download_parse.sh
-$ ./parse -file examples/example.js -named_only
-program [0, 0] - [4, 0] "// Adds two numbers.\n…"
-  comment [0, 0] - [0, 20] "// Adds two numbers."
-  function_declaration [1, 0] - [3, 1] "function add(a, b) {\n…"
-    name: identifier [1, 9] - [1, 12] "add"
-    parameters: formal_parameters [1, 12] - [1, 18] "(a, b)"
-      identifier [1, 13] - [1, 14] "a"
-      identifier [1, 16] - [1, 17] "b"
-    body: statement_block [1, 19] - [3, 1] "{\n…"
-      return_statement [2, 4] - [2, 17] "return a + b;"
-        binary_expression [2, 11] - [2, 16] "a + b"
-          left: identifier [2, 11] - [2, 12] "a"
-          right: identifier [2, 15] - [2, 16] "b"
-$ ./parse -file examples/example.js -use_tags_query -json | jq ".captures.doc[0].text"
-"// Adds two numbers."
+## ✨ Features
+
+| Capability | v1 | v2 |
+|---|---|---|
+| AST parsing (30+ languages) | ✅ | ✅🔥 |
+| Tree‑sitter query engine | ✅ | ✅ unified |
+| **Semantic understanding** | ❌ | ✅ tags + intents |
+| **Dependency graph** | ❌ | ✅ traversal + impact analysis |
+| **AI reasoning** | ❌ | ✅ explain / review / design |
+| **Intent‑based search** | ❌ | ✅ `--intent "auth"` |
+| **AST diff** | ❌ | ✅ `parse diff old.py new.py` |
+| **Repo memory / caching** | ❌ | ✅ SQLite index |
+| **Incremental / watch mode** | ❌ | ✅ file watcher |
+
+---
+
+## ⚡ Quick Start
+
+```bash
+# 1. Download the native parser binary
+./download_parse.sh
+
+# 2. Parse a file — see AST
+./parse -file examples/example.js -named_only
+
+# 3. Parse with semantic analysis (v2)
+pip install tree-sitter tree-sitter-python tree-sitter-javascript
+python -m src.cli.main parse test_files/test.py --output semantic
+
+# 4. AI-powered code review (dry run)
+python -m src.cli.main ai test_files/test.py --mode review
+
+# 5. Dependency graph
+python -m src.cli.main inspect test_files/test.py --mode graph
+
+# 6. Intent‑based query
+python -m src.cli.main inspect test.py --mode query --query "intent:database"
 ```
 
-## Support status
+---
 
-### Queries
+## 🧬 v2 Modules
 
-Queries try to follow the [conventions established by tree-sitter.](https://tree-sitter.github.io/tree-sitter/code-navigation-systems)
+| Module | Path | Purpose |
+|---|---|---|
+| **Core** | `src/core/` | Tree‑sitter wrapper, AST normalization |
+| **Semantic** | `src/semantic/` | Tags, intent inference, code analysis |
+| **Graph** | `src/graph/` | Builder, traversal, impact analysis, export (JSON/D3/Gexf) |
+| **Query** | `src/query/` | 2‑stage engine: intent → filters → graph traversal |
+| **Index** | `src/index/` | SQLite store, LRU cache, workspace manager |
+| **AI** | `src/ai/` | LLM wrapper, prompts, graph‑native explain/review/design |
+| **Watch** | `src/watch/` | File watcher, incremental parser |
+| **Contracts** | `src/contracts/` | Unified data types & interfaces (system contract) |
+| **Kernel** | `src/kernel/` | Orchestrator, context, pipeline (the "brain") |
+| **CLI** | `src/cli/` | Entrypoint, 5 commands |
 
-Most captures also include documentation as `@doc`. `@definition.function` and `@definition.method` also capture `@khulnasoft.parameters`.
+---
 
-| Top-level capture         | Python | TypeScript | JavaScript | Go  | Java | C++   | PHP | Ruby | C#  | Perl  | Kotlin | Dart  | Bash | C   |
-| ------------------------- | ------ | ---------- | ---------- | --- | ---- | ----- | --- | ---- | --- | ----- | ------ | ----- | ---- | --- |
-| `@definition.class`       | ✓      | ✓          | ✓          | ✓   | ✓    | ✓     | ✓   | ✓    | ✓   | ✓     | ✓      | ✓     | ✗    | ✗   |
-| `@definition.function`    | ✓      | ✓[^3]      | ✓          | ✓   | N/A  | ✓     | ✓   | N/A  | N/A | ✓     | ✓      | ✓     | ✓    | ✓   |
-| `@definition.method`      | ✓[^1]  | ✓[^3]      | ✓          | ✓   | ✓    | ✓[^1] | ✓   | ✓    | ✓   | ✓[^1] | ✓      | ✓[^1] | ✓    | ✓   |
-| `@definition.constructor` | ✓      | ✓          | ✓          | N/A | ✗    | ✗     | ✗   | ✗    | ✓   | ✗     | ✓      | ✗     | N/A  | N/A |
-| `@definition.interface`   | N/A    | ✓          | N/A        | ✓   | ✓    | N/A   | ✓   | ✗    | ✓   | N/A   | ✗      | ✗     | N/A  | N/A |
-| `@definition.namespace`   | N/A    | ✓          | N/A        | N/A | N/A  | ✓     | ✓   | N/A  | ✓   | ✗     | ✗      | N/A   | N/A  | N/A |
-| `@definition.module`      | N/A    | ✓          | N/A        | N/A | N/A  | ✗     | N/A | ✓    | N/A | N/A   | N/A    | ✗     | N/A  | N/A |
-| `@definition.type`        | N/A    | ✓          | N/A        | ✓   | N/A  | ✗     | ✗   | N/A  | N/A | N/A   | N/A    | ✗     | N/A  | N/A |
-| `@definition.constant`    | ✗      | ✗          | ✗          | ✗   | ✗    | ✗     | ✗   | ✗    | ✗   | ✗     | ✗      | ✗     | N/A  | ✗   |
-| `@definition.enum`        | ✗      | ✗          | ✗          | ✗   | ✗    | ✗     | ✗   | N/A  | ✓   | N/A   | ✗      | ✗     | N/A  | ✗   |
-| `@definition.import`      | ✓      | ✓          | ✓          | ✗   | ✗    | ✗     | N/A | ✓    | ✗   | ✓     | ✓      | ✗     | N/A  | ✓   |
-| `@definition.include`     | N/A    | N/A        | N/A        | N/A | N/A  | ✗     | ✗   | N/A  | N/A | N/A   | N/A    | N/A   | N/A  | N/A |
-| `@definition.package`     | N/A    | N/A        | N/A        | ✓   | ✓    | N/A   | N/A | N/A  | N/A | N/A   | N/A    | N/A   | N/A  | N/A |
-| `@reference.call`         | ✓      | ✓          | ✓          | ✓   | ✗    | ✗     | ✗   | ✓    | ✗   | ✗     | ✗      | ✗     | ✗    | ✗   |
-| `@reference.class`        | ✓[^2]  | ✓          | ✓          | ✓   | ✗    | ✗     | ✗   | ✗    | ✗   | ✗     | ✗      | ✗     | N/A  | N/A |
+## 📋 CLI Commands
 
-| Language | Supported injections   |
-| -------- | ---------------------- |
-| Vue      | JavaScript, TypeScript |
-| HTML     | JavaScript             |
+```text
+parse   <file>          Parse → normalized / semantic / sexp output
+inspect <file>          AST / semantic / graph / query / traverse modes
+ai      <file>          AI explanation, code review, or design reconstruction
+report  <dir>           Architecture report + dependency graph for a directory
+diff    <old> <new>     AST‑level diff with added / removed / modified nodes
+```
 
-[^1]: Currently functions and methods are not distinguished.
-[^2]: Function calls and class instantiation are indistinguishable in Python.
-[^3]: Function and method signatures are captured individually in TypeScript. Therefore, the `@doc` capture may not exist on all nodes.
+---
 
-Want to write a query for a new language? `tags.scm` and other queries in each language's tree-sitter repository, [like tree-sitter-javascript](https://github.com/tree-sitter/tree-sitter-javascript/blob/5720b249490b3c17245ba772f6be4a43edb4e3b7/queries/tags.scm), are a good place to start.
+## 🔍 Query Support
+
+Queries follow [tree‑sitter code navigation conventions](https://tree-sitter.github.io/tree-sitter/code-navigation-systems).  
+Most captures include `@doc`. `@definition.*` also captures `@khulnasoft.parameters`.
+
+| Capture | Python | TS | JS | Go | Java | C++ | PHP | Ruby | C# | Perl | Kotlin | Dart | Bash | C |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `@definition.class` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
+| `@definition.function` | ✓ | ✓ | ✓ | ✓ | N/A | ✓ | ✓ | N/A | N/A | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `@definition.method` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `@definition.import` | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | N/A | ✓ | ✗ | ✓ | ✓ | ✗ | N/A | ✓ |
+| `@reference.call` | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+
+<sup>Full table with all 16 captures → see [QUERY_PATTERNS.md](./QUERY_PATTERNS.md)</sup>
 
 ### Query predicates
 
-```console
-$ ./parse -supported_predicates
-#eq?/#not-eq?
-    (#eq? <@capture|"literal"> <@capture|"literal">)
-    Checks if two values are equal.
-
-#has-parent?/#not-has-parent?
-    (#has-parent? @capture node_type...)
-    Checks if @capture has a parent node of any of the given types.
-
-#has-type?/#not-has-type?
-    (#has-type? @capture node_type...)
-    Checks if @capture has a node of any of the given types.
-
-#lineage-from-name!
-    (#lineage-from-name! "literal")
-    If the name captures scopes, split by "literal" and retain the last element
-    as the name. The other elements are appended to the lineage.
-
-#match?/#not-match?
-    (#match? @capture "regex")
-    Checks if the text for @capture matches the given regular expression.
-
-#select-adjacent!
-    (#select-adjacent! @capture @anchor)
-    Selects @capture nodes contiguous with @anchor (all starting and ending on
-    adjacent lines).
-
-#set!
-    (#set! key <@capture|"literal">)
-    Store metadata as a side effect of a match.
-
-#strip!
-    (#strip! @capture "regex")
-    Removes all matching text from all @capture nodes.
+```text
+#eq? / #not-eq?         Value equality check
+#has-parent?            Parent node type check
+#match? / #not-match?   Regex match
+#select-adjacent!       Select contiguous nodes
+#set!                   Metadata side‑effect
+#strip!                 Regex text removal
 ```
 
-Need a predicate which hasn't been implemented? [File an issue!](https://github.com/KhulnaSoft/khulnasoft-parse/issues/new) We try to use [predicates from nvim-treesitter.](https://github.com/nvim-treesitter/nvim-treesitter/blob/980f0816cc28c20e45715687a0a21b5b39af59eb/lua/nvim-treesitter/query_predicates.lua)
+---
 
-### Grammars
+## 🌐 Supported Languages (30+)
 
-```console
-$ ./parse -supported_languages
-ada
-c
-cpp
-csharp
-css
-dart
-go
-hcl
-html
-java
-javascript
-json
-julia
-kotlin
-latex
-markdown
-ocaml
-ocaml_interface
-perl
-php
-protobuf
-python
-ruby
-rust
-shell
-svelte
-swift
-toml
-tree_sitter_query
-tsx
-typescript
-vue
-yaml
+```
+ada  c  cpp  csharp  css  dart  go  hcl  html  java  javascript
+json  julia  kotlin  latex  markdown  ocaml  ocaml_interface  perl
+php  protobuf  python  ruby  rust  shell  svelte  swift  toml
+tree_sitter_query  tsx  typescript  vue  yaml
 ```
 
-Looking for support for another language? [File an issue](https://github.com/KhulnaSoft/khulnasoft-parse/issues/new) with a link to the repo that contains the grammar.
+---
 
+## 🧪 Testing
 
-### Adding and testing queries
+```bash
+# Native parse binary tests
+./test.sh
 
-* You can create new source files with patterns you want to target in `test_files/`.
-* Look at the syntax tree using `./parse -file test_files/<your file>` to get a sense of how to capture the pattern.
-* Learn the query syntax from [tree-sitter documentation.](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries)
-* Run `./goldens.sh` to see what your query captures.
+# Python parser tests (requires LANGUAGE_SO or skips gracefully)
+python tests/parse_test.py --mode all
+```
+
+---
+
+## 🤝 Contributing
+
+1. Add test patterns in `test_files/`
+2. Inspect the AST with `./parse -file test_files/<file>`
+3. Write or update queries in `queries/`
+4. Run `./goldens.sh` to validate
+5. Open a PR!
+
+---
+
+<p align="center">
+  <sub>Built with ❤️ by <a href="https://khulnasoft.com">KhulnaSoft</a> &amp; contributors · 
+  <a href="https://github.com/khulnasoft/khulnasoft-parse/issues">Report issue</a> · 
+  <a href="https://khulnasoft.canny.io/feature-requests/">Request feature</a></sub>
+</p>
