@@ -1,0 +1,29 @@
+name: Parse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.ref_name != 'main' || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Python dependencies
+        run: |
+          pip install tree-sitter
+          pip install tree-sitter-javascript tree-sitter-python tree-sitter-go
+      - name: Download parse binary
+        run: ./download_parse.sh
+      - name: Run existing shell tests
+        run: ./test.sh
+      - name: Run Python test harness (skips parse if LANGUAGE_SO unset)
+        run: python tests/parse_test.py --mode all
