@@ -1,18 +1,7 @@
 # 🔬 khulnasoft-parse
 
-<p align="center">
+<p>
   <b>🧬 Multi‑layer Static + Semantic + Graph + AI Code Intelligence Engine</b>
-</p>
-
-<p align="center">
-  <a href="https://github.com/khulnasoft/khulnasoft-parse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/khulnasoft/khulnasoft-parse" alt="License"></a>
-  <a href="https://docs.khulnasoft.com"><img src="https://img.shields.io/badge/docs-khulnasoft-09B6A2" alt="Docs"></a>
-  <a href="https://twitter.com/intent/follow?screen_name=khulnasoft"><img src="https://img.shields.io/badge/follow-@khulnasoft-1DA1F2?logo=twitter" alt="Twitter"></a>
-  <a href="https://khulnasoft.canny.io/feature-requests/"><img src="https://img.shields.io/badge/feature_requests-canny-6b69ff" alt="Canny"></a>
-  <br>
-  <a href="https://marketplace.visualstudio.com/items?itemName=khulnasoft.khulnasoft"><img src="https://img.shields.io/visual-studio-marketplace/i/khulnasoft.khulnasoft?label=VS%20Code&logo=visualstudio" alt="VS Code"></a>
-  <a href="https://plugins.jetbrains.com/plugin/20540-khulnasoft/"><img src="https://img.shields.io/jetbrains/plugin/d/20540?label=JetBrains&logo=jetbrains" alt="JetBrains"></a>
-  <a href="https://open-vsx.org/extension/khulnasoft/khulnasoft"><img src="https://img.shields.io/open-vsx/dt/khulnasoft/khulnasoft?label=Open%20VSX" alt="Open VSX"></a>
 </p>
 
 ---
