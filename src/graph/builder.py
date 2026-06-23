@@ -2,13 +2,17 @@ from src.contracts.types import FileAnalysis
 from .relations import CodeGraph, GraphNode, GraphEdge
 
 
+def _qualified_id(analysis: FileAnalysis, name: str) -> str:
+    return f"{analysis.file}:{name}"
+
+
 def build(analysis: FileAnalysis) -> CodeGraph:
     graph = CodeGraph()
 
     for sym in analysis.symbols:
         loc = sym.location
         graph.add_node(GraphNode(
-            id=sym.name,
+            id=_qualified_id(analysis, sym.name),
             label=sym.name,
             kind=sym.kind,
             file=analysis.file,
@@ -19,12 +23,15 @@ def build(analysis: FileAnalysis) -> CodeGraph:
     for imp in analysis.imports:
         for name in imp.names:
             graph.add_edge(GraphEdge(
-                source=analysis.file, target=name, relation="imports",
+                source=_qualified_id(analysis, analysis.file),
+                target=name, relation="imports",
             ))
 
     for dep in analysis.dependencies:
         graph.add_edge(GraphEdge(
-            source=dep.source, target=dep.target, relation=dep.relation,
+            source=_qualified_id(analysis, dep.source),
+            target=_qualified_id(analysis, dep.target),
+            relation=dep.relation,
         ))
 
     return graph

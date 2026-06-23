@@ -133,7 +133,7 @@ def analyze(result: ParseResult, normalized: list[NormalizedNode]) -> FileAnalys
                         cognitive=_estimate_cognitive(n),
                     ),
                 )
-                tag_symbol(sym.name, sym.kind, sym.docstring)
+                sym.tags = tag_symbol(sym.name, sym.kind, sym.docstring)
                 analysis.symbols.append(sym)
                 deps = _collect_deps(n, sym.name)
                 analysis.dependencies.extend(deps)

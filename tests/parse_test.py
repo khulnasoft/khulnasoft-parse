@@ -28,6 +28,8 @@ def skip_if_no_lang_so():
 
 
 def test_python_parse_script():
+    if skip_if_no_lang_so():
+        return
     sys.path.insert(0, str(REPO_ROOT / "examples"))
     import parse_example
     for py_file in TEST_FILES.glob("*.py"):
@@ -41,6 +43,8 @@ def test_python_parse_script():
 
 
 def test_native_parse_binary():
+    if skip_if_no_parse():
+        return
     import subprocess
     for f in sorted(TEST_FILES.iterdir()):
         if not f.is_file():
@@ -63,13 +67,11 @@ def main():
 
     if args.mode in ("python", "all"):
         print("=== Python parser example tests ===")
-        if not skip_if_no_lang_so():
-            test_python_parse_script()
+        test_python_parse_script()
 
     if args.mode in ("native", "all"):
         print("=== Native parse binary tests ===")
-        if not skip_if_no_parse():
-            test_native_parse_binary()
+        test_native_parse_binary()
 
     print("\nAll tests passed.")
 

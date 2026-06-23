@@ -84,16 +84,41 @@ class AnalysisStore:
 
     @staticmethod
     def _analysis_from_dict(d: dict) -> FileAnalysis:
-        symbols = [Symbol(
-            name=s["name"], kind=s.get("kind", "unknown"),
-            visibility=s.get("visibility", "public"), tags=s.get("tags", []),
-            location=SourceLocation(file=d["file"], start_byte=s.get("start_byte", 0),
-                                    end_byte=s.get("end_byte", 0)),
-        ) for s in d.get("symbols", [])]
-        deps = [DependencyEdge(source=dd["source"], target=dd["target"],
-                               relation=dd.get("relation", ""))
-                for dd in d.get("dependencies", [])]
+        from src.contracts.types import Complexity
+        symbols = []
+        for s in d.get("symbols", []):
+            loc = None
+            if "location" in s:
+                loc_raw = s["location"]
+                loc = SourceLocation(
+                    file=loc_raw.get("file", d.get("file", "")),
+                    start_byte=loc_raw.get("start_byte", 0),
+                    end_byte=loc_raw.get("end_byte", 0),
+                )
+            elif "start_byte" in s:
+                loc = SourceLocation(file=d.get("file", ""), start_byte=s.get("start_byte", 0),
+                                     end_byte=s.get("end_byte", 0))
+            complexity = None
+            if "complexity" in s and s["complexity"]:
+                complexity = Complexity(cyclomatic=s["complexity"].get("cyclomatic", 0),
+                                        cognitive=s["complexity"].get("cognitive", 0))
+            symbols.append(Symbol(
+                name=s["name"], kind=s.get("kind", "unknown"),
+                visibility=s.get("visibility", "public"), tags=s.get("tags", []),
+                location=loc, complexity=complexity, docstring=s.get("docstring"),
+            ))
+        deps = []
+        for dd in d.get("dependencies", []):
+            dep_loc = None
+            if "location" in dd and dd["location"]:
+                dep_loc = SourceLocation(
+                    file=dd["location"].get("file", ""),
+                    start_byte=dd["location"].get("start_byte", 0),
+                    end_byte=dd["location"].get("end_byte", 0),
+                )
+            deps.append(DependencyEdge(source=dd["source"], target=dd["target"],
+                                       relation=dd.get("relation", ""), location=dep_loc))
         imports = [ImportEdge(source=i["source"], names=i.get("names", []), kind=i.get("kind", "module"))
                    for i in d.get("imports", [])]
-        return FileAnalysis(file=d["file"], language=d.get("language", ""),
+        return FileAnalysis(file=d.get("file", ""), language=d.get("language", ""),
                             symbols=symbols, dependencies=deps, imports=imports)
