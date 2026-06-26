@@ -1,7 +1,8 @@
 import json
 from pathlib import Path
-from src.core.parser import ParseResult, ASTNode
+from src.core.parser import ParseResult
 from src.core.ast_normalizer import normalize
+from src.core.tree_sitter_utils import ts_node_to_astnode
 from src.semantic.analyzer import analyze
 from src.graph.builder import build, build_from_reports
 from src.graph.exporter import to_json as graph_json
@@ -32,7 +33,8 @@ def run(args: dict) -> None:
             tree = parser_inst.parse(src)
 
             result = ParseResult(source_path=str(f), language=lang_name,
-                                 root=_ts_to_astn(tree.root_node, src), source_text=src.decode("utf-8", "replace"))
+                                 root=ts_node_to_astnode(tree.root_node, src),
+                                 source_text=src.decode("utf-8", "replace"))
             normalized = normalize(result)
             report = analyze(result, normalized)
             reports.append(report)
@@ -53,17 +55,3 @@ def run(args: dict) -> None:
             "reports": [r.to_dict() for r in reports],
         }
         print(json.dumps(combined, indent=2))
-
-
-def _ts_to_astn(ts_node, src: bytes):
-    children = []
-    for i in range(ts_node.child_count):
-        c = ts_node.child(i)
-        if c.is_named:
-            children.append(_ts_to_astn(c, src))
-    text = None
-    if ts_node.child_count == 0:
-        text = src[ts_node.start_byte:ts_node.end_byte].decode("utf-8", "replace")
-    return ASTNode(type=ts_node.type, start_byte=ts_node.start_byte, end_byte=ts_node.end_byte,
-                   start_point=ts_node.start_point, end_point=ts_node.end_point, is_named=ts_node.is_named,
-                   text=text, children=children)

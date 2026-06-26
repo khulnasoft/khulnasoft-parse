@@ -1,6 +1,7 @@
 import json
-from src.core.parser import ParseResult, ASTNode
+from src.core.parser import ParseResult
 from src.core.ast_normalizer import normalize, normalize_full, node_to_dict
+from src.core.tree_sitter_utils import ts_node_to_astnode
 from src.semantic.analyzer import analyze
 from src.graph.builder import build
 from src.graph.exporter import to_json as graph_json, to_d3
@@ -25,12 +26,7 @@ def run(args: dict) -> None:
     tree = parser_inst.parse(src)
 
     result = ParseResult(source_path=filepath, language=lang_name,
-                         root=ASTNode(type=tree.root_node.type, start_byte=tree.root_node.start_byte,
-                                      end_byte=tree.root_node.end_byte, start_point=tree.root_node.start_point,
-                                      end_point=tree.root_node.end_point, is_named=tree.root_node.is_named,
-                                      children=[_ts_to_astn(tree.root_node.child(i), src)
-                                                for i in range(tree.root_node.child_count)
-                                                if tree.root_node.child(i).is_named]),
+                         root=ts_node_to_astnode(tree.root_node, src),
                          source_text=src.decode("utf-8", "replace"))
 
     if mode == "ast":
@@ -79,17 +75,3 @@ def run(args: dict) -> None:
         print(json.dumps(results, indent=2))
     else:
         print(f"Unknown inspect mode: {mode}")
-
-
-def _ts_to_astn(ts_node, src: bytes):
-    children = []
-    for i in range(ts_node.child_count):
-        c = ts_node.child(i)
-        if c.is_named:
-            children.append(_ts_to_astn(c, src))
-    text = None
-    if ts_node.child_count == 0:
-        text = src[ts_node.start_byte:ts_node.end_byte].decode("utf-8", "replace")
-    return ASTNode(type=ts_node.type, start_byte=ts_node.start_byte, end_byte=ts_node.end_byte,
-                   start_point=ts_node.start_point, end_point=ts_node.end_point, is_named=ts_node.is_named,
-                   text=text, children=children)

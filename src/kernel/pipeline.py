@@ -28,7 +28,8 @@ class ParseStep(PipelineStep):
     def execute(self, ctx: AnalysisContext) -> AnalysisContext:
         from pathlib import Path
         from examples.parse_example import get_language, _make_parser
-        from src.core.parser import ParseResult, ASTNode
+        from src.core.parser import ParseResult
+        from src.core.tree_sitter_utils import ts_node_to_astnode
 
         try:
             src = Path(ctx.filepath).read_bytes()
@@ -44,7 +45,7 @@ class ParseStep(PipelineStep):
 
             ctx.parse_result = ParseResult(
                 source_path=ctx.filepath, language=lang,
-                root=_ts_to_astn(tree.root_node, src), source_text=ctx.source_text)
+                root=ts_node_to_astnode(tree.root_node, src), source_text=ctx.source_text)
         except Exception as e:
             ctx.error = f"Parse failed: {e}"
         return ctx
@@ -72,18 +73,3 @@ class GraphStep(PipelineStep):
         if ctx.analysis:
             ctx.graph = build(ctx.analysis)
         return ctx
-
-
-def _ts_to_astn(ts_node, src: bytes):
-    from src.core.parser import ASTNode
-    children = []
-    for i in range(ts_node.child_count):
-        c = ts_node.child(i)
-        if c.is_named:
-            children.append(_ts_to_astn(c, src))
-    text = None
-    if ts_node.child_count == 0:
-        text = src[ts_node.start_byte:ts_node.end_byte].decode("utf-8", "replace")
-    return ASTNode(type=ts_node.type, start_byte=ts_node.start_byte, end_byte=ts_node.end_byte,
-                   start_point=ts_node.start_point, end_point=ts_node.end_point, is_named=ts_node.is_named,
-                   text=text, children=children)

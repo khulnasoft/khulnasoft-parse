@@ -1,4 +1,7 @@
-from src.core.ast_normalizer import normalize, node_to_dict, normalize_full
+import json
+import subprocess
+import sys
+
 from src.core.parser import ParseResult, ASTNode
 
 
@@ -11,53 +14,67 @@ def _flatten(node, prefix=""):
     return items
 
 
+def _parse_sexp(sexp: str, src: bytes) -> ASTNode:
+    import re
+    lines = sexp.strip().split("\n")
+    stack = []
+    root = None
+    for line in lines:
+        stripped = line.strip()
+        if not stripped or stripped == ")":
+            continue
+        match = re.match(r'^\((\w+)\s+\[.*?\]\s+\[.*?\]\s+"(.*?)"\)$', stripped)
+        if match:
+            node = ASTNode(type=match.group(1), start_byte=0, end_byte=0, start_point=(0, 0), end_point=(0, 0),
+                           is_named=True, text=match.group(2))
+            if stack:
+                stack[-1].children.append(node)
+            else:
+                root = node
+            continue
+        match = re.match(r'^\((\w+)\s', stripped)
+        if match:
+            node = ASTNode(type=match.group(1), start_byte=0, end_byte=0, start_point=(0, 0), end_point=(0, 0),
+                           is_named=True)
+            if stack:
+                stack[-1].children.append(node)
+            stack.append(node)
+            if root is None:
+                root = node
+    return root or ASTNode(type="program", start_byte=0, end_byte=0, start_point=(0, 0), end_point=(0, 0), is_named=True)
+
+
+def _parse_via_binary(fp: str) -> ParseResult:
+    parse_bin = "./parse"
+    try:
+        r = subprocess.run([parse_bin, "-file", fp], capture_output=True, timeout=30)
+    except FileNotFoundError:
+        print(f"Error: '{parse_bin}' binary not found. Run ./download_parse.sh first.", file=sys.stderr)
+        sys.exit(1)
+    except subprocess.TimeoutExpired:
+        print(f"Error: '{parse_bin}' timed out on {fp}", file=sys.stderr)
+        sys.exit(1)
+
+    if r.returncode != 0:
+        stderr = r.stderr.decode().strip()
+        print(f"Error: '{parse_bin}' failed on {fp}: {stderr}", file=sys.stderr)
+        sys.exit(1)
+
+    stdout = r.stdout.decode().strip()
+    if not stdout:
+        print(f"Error: '{parse_bin}' produced empty output for {fp}", file=sys.stderr)
+        sys.exit(1)
+
+    text = open(fp, "rb").read()
+    return ParseResult(source_path=fp, language="?", root=_parse_sexp(stdout, text), source_text=text.decode())
+
+
 def run(args: dict) -> None:
     file_a = args.get("file_a")
     file_b = args.get("file_b")
 
-    from src.core.parser import BaseParser as _BP
-    from src.core.ast_normalizer import _extract_name as _en
-
-    class _DummyParser(_BP):
-        def parse_file(self, fp: str) -> ParseResult:
-            import subprocess, json, tempfile, os
-            parse_bin = "./parse"
-            r = subprocess.run([parse_bin, "-file", fp], capture_output=True, timeout=30)
-            text = open(fp, "rb").read()
-            return ParseResult(source_path=fp, language="?", root=_parse_sexp(r.stdout.decode(), text), source_text=text.decode())
-        def parse_bytes(self, source: bytes, fp: str = "<input>") -> ParseResult:
-            return ParseResult(source_path=fp, language="?", root=ASTNode(type="error", start_byte=0, end_byte=0, start_point=(0,0), end_point=(0,0), is_named=True, text=source.decode()), source_text=source.decode())
-
-    def _parse_sexp(sexp: str, src: bytes) -> ASTNode:
-        import re
-        lines = sexp.strip().split("\n")
-        stack = []
-        root = None
-        for line in lines:
-            stripped = line.strip()
-            if not stripped or stripped == ")":
-                continue
-            match = re.match(r'^\((\w+)\s+\[.*?\]\s+\[.*?\]\s+"(.*?)"\)$', stripped)
-            if match:
-                node = ASTNode(type=match.group(1), start_byte=0, end_byte=0, start_point=(0,0), end_point=(0,0), is_named=True, text=match.group(2))
-                if stack:
-                    stack[-1].children.append(node)
-                else:
-                    root = node
-                continue
-            match = re.match(r'^\((\w+)\s', stripped)
-            if match:
-                node = ASTNode(type=match.group(1), start_byte=0, end_byte=0, start_point=(0,0), end_point=(0,0), is_named=True)
-                if stack:
-                    stack[-1].children.append(node)
-                stack.append(node)
-                if root is None:
-                    root = node
-        return root or ASTNode(type="program", start_byte=0, end_byte=0, start_point=(0,0), end_point=(0,0), is_named=True)
-
-    parser = _DummyParser()
-    result_a = parser.parse_file(file_a)
-    result_b = parser.parse_file(file_b)
+    result_a = _parse_via_binary(file_a)
+    result_b = _parse_via_binary(file_b)
 
     nodes_a = _flatten(result_a.root)
     nodes_b = _flatten(result_b.root)
@@ -76,7 +93,6 @@ def run(args: dict) -> None:
         if na.type != nb.type or (na.text or "") != (nb.text or ""):
             modified.append(k)
 
-    import json
     diff = {
         "file_a": file_a,
         "file_b": file_b,

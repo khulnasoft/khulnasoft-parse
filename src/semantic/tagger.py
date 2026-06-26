@@ -1,4 +1,4 @@
-from .schema import Symbol
+from src.contracts.types import Symbol
 
 _TAG_PATTERNS: list[tuple[set[str], set[str], str]] = [
     ({"parser", "parse", "lexer", "tokenizer"}, set(), "parser"),
@@ -36,7 +36,7 @@ def tag_symbol(name: str, node_type: str, docstring: str | None = None) -> list[
     elif node_type in ("class_declaration", "class_definition"):
         tags.add("class")
 
-    for names, types, tag in _TAG_PATTERNS:
+    for names, _types, tag in _TAG_PATTERNS:
         for n in names:
             if n in text:
                 tags.add(tag)
