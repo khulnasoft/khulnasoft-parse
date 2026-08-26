@@ -4,7 +4,9 @@
   <b>🧬 Multi‑layer Static + Semantic + Graph + AI Code Intelligence Engine</b>
 </p>
 
----
+[![Visual Studio](https://img.shields.io/visual-studio-marketplace/i/khulnasoft.khulnasoft?label=Visual%20Studio&logo=visualstudio)](https://marketplace.visualstudio.com/items?itemName=khulnasoft.khulnasoft)
+[![JetBrains](https://img.shields.io/jetbrains/plugin/d/20540?label=JetBrains)](https://plugins.jetbrains.com/plugin/20540-khulnasoft/)
+[![Open VSX](https://img.shields.io/open-vsx/dt/khulnasoft/khulnasoft?label=Open%20VSX)](https://open-vsx.org/extension/khulnasoft/khulnasoft)
 
 ## 🏗️ Architecture
 
