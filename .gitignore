@@ -1,2 +1,6 @@
 parse.gz
 parse
+.parse/
+__pycache__/
+*.pyc
+.DS_Store
